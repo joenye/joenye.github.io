@@ -1,9 +1,8 @@
 module.exports = {
-  pathPrefix: "/joenye.github.io",
   siteMetadata: {
     title: `Joe Nye's Blog`,
     description: `Personal site`,
-    siteUrl: `https://joenye.github.io/`,
+    siteUrl: `https://joenye.co.uk/`,
   },
   plugins: [
     {
