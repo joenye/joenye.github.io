@@ -1,16 +1,16 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 
-import Layout from "../components/layout";
-import SEO from "../components/seo";
+import Seo from "../components/Seo";
+import Layout from "../components/Layout";
 
-const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`;
-  const posts = data.allMarkdownRemark.edges.map(edge => edge.node);
+const BlogIndexPage = ({ data }) => {
+  const siteTitle = data.site.siteMetadata.title;
+  const posts = data.allMarkdownRemark.edges.map((edge) => edge.node);
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <SEO title="All posts" />
+    <Layout title={`${siteTitle}'s Blog 📝`}>
+      <Seo title="All blog posts" />
       <ol style={{ listStyle: `none` }}>
         {posts.map((post) => {
           const title = post.frontmatter.title || post.fields.slug;
@@ -37,7 +37,7 @@ const BlogIndex = ({ data, location }) => {
   );
 };
 
-export default BlogIndex;
+export default BlogIndexPage;
 
 export const pageQuery = graphql`
   query {
@@ -57,7 +57,7 @@ export const pageQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
+            date(formatString: "DD MMMM YYYY")
             title
             description
           }

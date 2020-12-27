@@ -1,17 +1,17 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React from "react";
+import { Link, graphql } from "gatsby";
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 
-const BookReviewTemplate = ({ data, location }) => {
-  const post = data.markdownRemark
-  const siteTitle = data.site.siteMetadata?.title || `Title`
-  const { previous, next } = data
+const BlogPostTemplate = ({ data }) => {
+  const post = data.markdownRemark;
+  const siteTitle = data.site.siteMetadata?.title || `Title`;
+  const { previous, next } = data;
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <SEO
+    <Layout title={`${siteTitle}'s Blog 📝`}>
+      <Seo
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
@@ -28,7 +28,6 @@ const BookReviewTemplate = ({ data, location }) => {
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
         />
-        <hr />
       </article>
       <nav className="blog-post-nav">
         <ul
@@ -42,14 +41,14 @@ const BookReviewTemplate = ({ data, location }) => {
         >
           <li>
             {previous && (
-              <Link to={previous.fields.slug} rel="prev">
+              <Link to={`/posts${previous.fields.slug}`} rel="prev">
                 ← {previous.frontmatter.title}
               </Link>
             )}
           </li>
           <li>
             {next && (
-              <Link to={next.fields.slug} rel="next">
+              <Link to={`/posts${next.fields.slug}`} rel="next">
                 {next.frontmatter.title} →
               </Link>
             )}
@@ -57,13 +56,13 @@ const BookReviewTemplate = ({ data, location }) => {
         </ul>
       </nav>
     </Layout>
-  )
-}
+  );
+};
 
-export default BookReviewTemplate;
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BookReviewBySlug(
+  query BlogPostBySlug(
     $id: String!
     $previousPostId: String
     $nextPostId: String
@@ -79,7 +78,7 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        date(formatString: "DD MMMM YYYY")
         description
       }
     }
@@ -100,4 +99,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
